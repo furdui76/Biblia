@@ -1,0 +1,17 @@
+﻿<Window x:Class="Biblia.TemeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Teme biblice"
+        Height="500" Width="700"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <TextBlock Text="Teme biblice" FontSize="24" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+        <ListBox x:Name="listTeme"
+                 Margin="0,60,0,0"
+                 FontSize="16"
+                 SelectionChanged="listTeme_SelectionChanged"/>
+    </Grid>
+</Window>
+
+

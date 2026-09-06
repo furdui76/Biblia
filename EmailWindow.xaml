@@ -1,0 +1,61 @@
+﻿<Window x:Class="Biblia.EmailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Trimite predica ✉️"
+        Height="415" Width="479"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="WhiteSmoke">
+
+    <Border CornerRadius="12" BorderBrush="DarkSlateBlue" BorderThickness="2" Padding="15" Margin="10">
+        <StackPanel>
+            <TextBlock Text="✉️ Trimite predica prin email"
+                       FontSize="16" FontWeight="Bold"
+                       Foreground="DarkSlateBlue"
+
+                       Margin="0,0,0,15"
+                       TextAlignment="Center"/>
+
+            <!-- Destinatar -->
+            <TextBlock Text="Destinatar email:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtDestinatar"
+                     Width="380" Height="28"
+                     FontSize="14"
+                     HorizontalAlignment="Center"
+                     TextAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+
+            <!-- Subiect -->
+            <TextBlock Text="Subiect titlu:" FontWeight="Bold" Margin="10,10,0,5"/>
+            <TextBox x:Name="txtSubiect"
+                     Width="380" Height="28"
+                     FontSize="14"
+                     HorizontalAlignment="Center"
+                     TextAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+
+            <!-- Mesaj -->
+            <TextBlock Text="Mesaj Predica:" FontWeight="Bold" Margin="10,10,0,5"/>
+            <TextBox x:Name="txtMesaj"
+                     Width="380" Height="100"
+                     FontSize="14"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     HorizontalAlignment="Center"
+                     VerticalContentAlignment="Top"/>
+
+            <!-- Butoane -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <Button x:Name="btnCancel" Content="Anulează ✉️ "
+                        Width="100" Height="30"
+                        Background="LightGray"
+                        Margin="0,0,10,0"
+                        Click="btnCancel_Click"/>
+                <Button x:Name="btnOk" Content="Trimite ✉️"
+                        Width="100" Height="30"
+                        Background="DarkSlateBlue" Foreground="White"
+                        Click="btnOk_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

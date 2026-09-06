@@ -1,0 +1,69 @@
+﻿<Window x:Class="Biblia.TrimiteriWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Versete pentru temă"
+        Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <!-- 🔹 Titlul temei -->
+        <TextBlock x:Name="titluTema"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,10,0,0" />
+
+        <!-- 🔹 Filtrare carte + capitol -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,50,0,0">
+            <ComboBox x:Name="comboCarte"
+                      Width="150"
+                      Margin="10"
+                      FontSize="14"
+                      IsEditable="True"
+                      SelectedIndex="-1">
+                <ComboBox.Text>(alege cartea)</ComboBox.Text>
+            </ComboBox>
+
+            <ComboBox x:Name="comboCapitol"
+                      Width="100"
+                      Margin="10"
+                      FontSize="14"
+                      IsEditable="True"
+                      SelectedIndex="-1">
+                <ComboBox.Text>(capitol)</ComboBox.Text>
+            </ComboBox>
+
+            <Button Content="Filtrează"
+                    Width="100"
+                    Margin="10"
+                    FontSize="14"
+                    Click="OnFiltreazaClick" />
+
+            <Button Content="Resetare"
+                    Width="100"
+                    Margin="10"
+                    FontSize="14"
+                    Click="OnReseteazaClick" />
+        </StackPanel>
+
+        <!-- 🔹 Label cu numărul de versete -->
+        <Label x:Name="labelCount"
+               FontSize="16"
+               FontWeight="Bold"
+               Foreground="DarkGreen"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="10,100,0,0" />
+
+        <!-- 🔹 Lista cu versete -->
+        <ListBox x:Name="listVersete"
+                 Margin="0,130,0,0"
+                 FontSize="16"
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>

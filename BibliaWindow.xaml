@@ -1,0 +1,671 @@
+﻿<Window x:Class="Biblia.BibliaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Biblia" Height="840" Width="1295"
+        WindowStartupLocation="CenterScreen"
+        Background="White">
+
+
+
+    <Grid Margin="0,0,1,-5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="gridPrincipal" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ColMeniu" Width="*" />
+                <ColumnDefinition x:Name="ColCitire" Width="3*" />
+                <ColumnDefinition x:Name="ColSchita" Width="0" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Meniu lateral -->
+            <StackPanel Grid.Column="0" Background="#F0F0F0" x:Name="MeniuLateral">
+
+                <!-- TITLU + STEA (corectat, steaua după text) -->
+                <StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Center">
+
+                    <Border Margin="8"
+                      Padding="6"
+                      Background="Transparent"
+                      BorderThickness="0">
+
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                            <!-- Titlul -->
+                            <TextBlock x:Name="txtTitluCarte"
+                              FontSize="22"
+                              FontWeight="Bold"
+                              TextAlignment="Center"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              TextWrapping="Wrap"
+                              Foreground="Black"
+                              Margin="25,0,0,4">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#888"
+                              BlurRadius="8"
+                              ShadowDepth="0"
+                              Opacity="0.4"/>
+                                </TextBlock.Effect>
+                            <Run x:Name="runTitlu"/>
+                            </TextBlock>
+
+                            <!-- Steaua sub titlu -->
+                            <TextBlock x:Name="txtStea"
+                             TextAlignment="Center"
+                             Margin="0,-4,0,0"
+                             ToolTipService.ShowDuration="60000">
+
+                                <TextBlock.Resources>
+                                    <Storyboard x:Key="PulseStar"
+                             RepeatBehavior="Forever"
+                             AutoReverse="True">
+
+                                        <DoubleAnimation Storyboard.TargetName="txtStea"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1"
+                             To="0.3"
+                             Duration="0:0:1.2"/>
+                                    </Storyboard>
+                                </TextBlock.Resources>
+
+                            <Run x:Name="runStea"
+                             FontSize="40"
+                             Foreground="RED"/>
+                           
+                            <!-- Simbol comentarii sub titlu -->
+                            <TextBlock x:Name="txtComentarii"
+                           
+                                       Text="📘"
+                                       FontSize="20"
+                                       Foreground="DarkBlue"
+                                       Margin="6,-4,0,0"
+                                       VerticalAlignment="Center"
+                                       Visibility="Collapsed"/>
+
+                            </TextBlock>
+                        </StackPanel>
+
+
+                    </Border>
+
+
+                    <Image x:Name="imgFavoriteTitlu"
+           Source="Images/CarteFavorita.png"
+           Width="18"
+           Height="18"
+           Margin="6,0,0,0"
+           VerticalAlignment="Center"
+           Visibility="Collapsed"
+           ToolTip=""/>
+                </StackPanel>
+
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10" Height="400">
+                    <StackPanel x:Name="ListaCarti" />
+                </ScrollViewer>
+
+                <TextBlock Text="Capitole"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="10,0,10,5"/>
+
+                <Label x:Name="lblNrCapitole"
+                       FontSize="14"
+                       Foreground="DarkSlateGray"
+                       Margin="10,0,10,5"
+                       Visibility="Collapsed"/>
+
+                <ScrollViewer x:Name="ScrollCapitole"
+                              VerticalScrollBarVisibility="Auto"
+                              Height="150"
+                              Margin="10"
+                              Visibility="Collapsed">
+                    <WrapPanel x:Name="ListaCapitole" />
+                </ScrollViewer>
+            </StackPanel>
+
+            <!-- Zona de citire -->
+            <ScrollViewer Grid.Column="1"
+                          Margin="0,10,10,10"
+                          VerticalScrollBarVisibility="Auto"
+                          PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" HorizontalAlignment="Right" Width="950">
+                <StackPanel>
+                    <Label x:Name="lblPozitieCurenta"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"
+                           Content="📖 Selectează o carte și un capitol" />
+
+                    <Grid Margin="5,0,5,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <!-- prima linie: butoane + label -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- a doua linie: favorite -->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- stânga -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- dreapta -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Butoanele la stânga -->
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center">
+                            <Button Content="🔊 Citește"
+                                    Click="btnCitesteCapitol_Click"
+                                    FontSize="13"
+                                    Height="25"
+                                    Padding="6,2"
+                                    ToolTip="Start citire"
+                                    Margin="0,0,6,0"/>
+                            <Button Content="⏸️ Pauză"
+                                    Click="btnPauzaCitire_Click"
+                                    FontSize="14"
+                                    Height="25"
+                                    Padding="6,2"
+                                    ToolTip="Pauză Citire"
+                                    Margin="0,0,6,0"/>
+                            <Button Content="▶️ Reia"
+                                    Click="btnReiaCitirea_Click"
+                                    FontSize="14"
+                                    Height="25"
+                                    Padding="6,2"
+                                    ToolTip="Reia Citirea de unde a ramas"
+                                    Margin="0,0,6,0"/>
+                            <Button Content="⏹️ Oprește"
+                                    Click="btnOpresteCitirea_Click"
+                                    FontSize="14"
+                                    Height="25"
+                                    ToolTip="Oprește Citirea"
+                                    Padding="6,2"/>
+                        </StackPanel>
+
+                        <!-- Labelul în dreapta -->
+                        <Label x:Name="lblRezultateCautare"
+                               FontSize="18"
+                               Margin="400,-5,0,0"
+                               Foreground="DarkGreen"
+                               Visibility="Collapsed"
+                               Content="🔍 Găsit 0 cuvinte în 0 versete" />
+
+                        <!-- Panou favorite pe rândul 2 -->
+                        <StackPanel x:Name="panouFavorite"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,10"
+                                    Visibility="Collapsed">
+                            <TextBlock Text="📂 Lista favorite:"
+                                       FontSize="14"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0"/>
+                            <ComboBox x:Name="comboListeFavorite"
+                                      Width="200"
+                                      IsEditable="True"
+                                      SelectionChanged="comboListeFavorite_SelectionChanged"
+                                      ToolTip="Selectează sau scrie o listă tematică"/>
+                            <Button Content="➕ Adaugă în listă"
+                                    Margin="10,0,0,0"
+                                    Click="btnAdaugaInListaFavorite_Click"/>
+                            <Button Content="🗑️ Șterge lista"
+                                    Margin="10,0,0,0"
+                                    Click="btnStergeListaFavorite_Click"/>
+                            <Button Content="✏️ Redenumește lista"
+                                    Margin="10,0,0,0"
+                                    Click="btnRedenumesteListaFavorite_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <ListBox x:Name="listVersete"
+         MouseDoubleClick="listVersete_MouseDoubleClick"
+         HorizontalContentAlignment="Stretch"
+         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.VerticalScrollBarVisibility="Auto"
+         Margin="0,10,0,0"/>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Panou Schiță -->
+            <Border x:Name="panouSchita"
+                    Grid.Column="2"
+                    CornerRadius="12"
+                    Padding="12"
+                    Margin="10"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    MaxWidth="520"
+                    BorderBrush="#1E3A8A"
+                    BorderThickness="2">
+
+                <Border.Background>
+                    <SolidColorBrush Color="#F5F5F5" Opacity="0.85"/>
+                </Border.Background>
+
+                <Border.Effect>
+                    <BlurEffect Radius="0"/>
+                </Border.Effect>
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="❌"
+                                Width="20"
+                                Height="20"
+                                FontSize="10"
+                                ToolTip="Închide panoul"
+                                Click="btnInchideSchita_Click"/>
+                    </StackPanel>
+
+                    <ScrollViewer x:Name="panouIstoric"
+                                  Grid.Column="0"
+                                  Visibility="Collapsed">
+                        <StackPanel>
+                            <!-- conținut istoric -->
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Margin="0,10,0,20">
+                        <TextBlock Text="📝 Schița de predică în construcție"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   FontFamily="Georgia"
+                                   Foreground="#1E3A8A"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Gray"
+                                                  BlurRadius="40"
+                                                  ShadowDepth="12"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <Rectangle Height="2"
+                                   Width="323"
+                                   Fill="#1E3A8A"
+                                   Margin="35,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                Margin="0,0,0,5"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="Titlu predică:"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="#1E3A8A"
+                                   Margin="-70,0,0,5"
+                                   TextAlignment="Left"/>
+
+                        <TextBox x:Name="txtTitluPredica"
+                                 ToolTip="Scrie titlu predicii"
+                                 Height="25"
+                                 Width="220"
+                                 FontSize="14"
+                                 Foreground="DarkBlue"
+                                 Background="#F0F8FF"
+                                 BorderBrush="#1E3A8A"
+                                 BorderThickness="1"
+                                 Margin="-70,0,0,5"
+                                 TextAlignment="Center"
+                                 VerticalContentAlignment="Top"/>
+                    </StackPanel>
+
+                    <ScrollViewer Height="500"
+                                  VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="listaSchita"/>
+                    </ScrollViewer>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="7,0,0,0">
+
+                        <Button x:Name="btnSalveazaPredica"
+                                Content="💾 Salvează predica"
+                                Height="25"
+                                FontSize="10"
+                                Click="btnSalveazaPredica_Click"
+                                ToolTip="Salveaza Predica"/>
+
+                        <ComboBox x:Name="formatComboBox"
+                                  Width="60"
+                                  Margin="5"
+                                  FontSize="10"
+                                  ToolTip="Alege formatu pentru salvare">
+                            <ComboBoxItem Content="DOCX" IsSelected="True"/>
+                            <ComboBoxItem Content="PDF"/>
+                            <ComboBoxItem Content="TXT"/>
+                        </ComboBox>
+
+                        <ComboBox x:Name="comboFormatHartie"
+                                  Width="50"
+                                  Margin="5"
+                                  FontSize="10"
+                                  ToolTip="Alege formatul de hârtie">
+                            <ComboBoxItem Content="A4" IsSelected="True"/>
+                            <ComboBoxItem Content="A5"/>
+                            <ComboBoxItem Content="A6" IsSelected="True"/>
+                            <ComboBoxItem Content="Letter"/>
+                            <ComboBoxItem Content="Legal"/>
+                        </ComboBox>
+
+                        <Button x:Name="btnTrimitePredica"
+                                Content="✉️"
+                                Height="25"
+                                FontSize="10"
+                                Margin="5"
+                                Click="btnTrimitePredica_Click"
+                                ToolTip="📂 Trimte prin meil"/>
+
+                        <Button x:Name="btnIncarcaSchita"
+                                Content="📂 Încarcă schița"
+                                Click="btnIncarcaSchita_Click"
+                                ToolTip="📂 Încarcă schița"
+                                Height="25"
+                                FontSize="10"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,10,10">
+                        <TextBlock Text="Font:"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,5,0"/>
+                        <ComboBox x:Name="comboFontSchita"
+                                  ToolTip="Alege fontu"
+                                  Width="120"
+                                  SelectionChanged="comboFontSchita_SelectionChanged">
+                            <ComboBoxItem Content="Georgia" IsSelected="True"/>
+                            <ComboBoxItem Content="Times New Roman"/>
+                            <ComboBoxItem Content="Calibri"/>
+                            <ComboBoxItem Content="Segoe UI"/>
+                        </ComboBox>
+
+                        <TextBlock Text="Dim:"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,5,0"/>
+
+                        <ComboBox x:Name="comboFontSizeSchita"
+                                  ToolTip="Dimensiune Font">
+                            Width="40"
+                                  SelectionChanged="comboFontSizeSchita_SelectionChanged">
+                            <ComboBoxItem Content="04"/>
+                            <ComboBoxItem Content="06"/>
+                            <ComboBoxItem Content="08"/>
+                            <ComboBoxItem Content="10" IsSelected="True"/>
+                            <ComboBoxItem Content="11"/>
+                            <ComboBoxItem Content="12"/>
+                            <ComboBoxItem Content="13"/>
+                            <ComboBoxItem Content="14"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Bara de butoane jos -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="10,10,0,10"
+                    Width="Auto">
+
+            <Button x:Name="btnToggleTrimiteri"
+                    Width="90"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="btnToggleTrimiteri_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Deschide/închide fereastra Trimiteri"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal" Width="88">
+                    <Image Source="Images/Trimiteri.png"
+                           Width="30"
+                           Height="30"/>
+                    <TextBlock Text="Trimiteri"
+                               Margin="2,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnMarimeText"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="btnMarimeText_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Mărește dimensiunea textului"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal" Width="120">
+                    <Image Source="Images/MarireText.png"
+                           Width="30"
+                           Height="30"/>
+                    <TextBlock Text="Mărire Text"
+                               Margin="2,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnModIntunecat"
+                    Width="120"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="btnModIntunecat_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Activează/dezactivează modul întunecat 🌙"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal" Width="140">
+                    <Image Source="Images/ModIntunecat.png"
+                           Width="30"
+                           Height="30"/>
+                    <TextBlock Text="Mod Întunecat"
+                               Margin="2,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnToggleComentarii"
+                    Width="100"
+                    Height="30"
+                    Click="btnToggleComentarii_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Arată/ascunde comentariile"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/Comentarii.png"
+                           Width="30"
+                           Height="30"/>
+                    <TextBlock Text="Comentarii"
+                               Margin="0,0,5,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnArataStele"
+                    Width="120"
+                    Height="30"
+                    Margin="5,0,5,0"
+                    Click="btnArataStele_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Arată/ascunde butoanele de favorite ⭐"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal" Width="120">
+                    <TextBlock Text="Buton Favorite ⭐"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"
+                               Width="90"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnFavorite"
+                    Width="110"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="btnFavorite_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Arată lista de favorite"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/CarteFavorita.png"
+                           Width="24"
+                           Height="24"
+                           VerticalAlignment="Center"/>
+                    <TextBlock Text="Favorite"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnModSchita"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    Click="btnModSchita_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Activează/dezactivează modul Schiță"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/Schita.png"
+                           Width="24"
+                           Height="24"
+                           VerticalAlignment="Center"/>
+                    <TextBlock Text="Schiță"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnCapitolAnterior"
+                    Width="60"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    Click="btnCapitolAnterior_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Capitolul anterior"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Images/Stinga.png"
+                       Width="30"
+                       Height="30"/>
+            </Button>
+
+            <Button x:Name="btnCapitolUrmator"
+                    Width="60"
+                    Height="30"
+                    Click="btnCapitolUrmator_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Capitolul următor"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Images/Dreapta.png"
+                       Width="30"
+                       Height="30"/>
+            </Button>
+
+            <Button x:Name="btnCautare"
+                    Width="100"
+                    Height="30"
+                    Margin="10,0,10,0"
+                    Click="btnCautare_Click">
+                <Button.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Caută un verset sau un cuvânt în Biblie"
+                                   Foreground="DarkBlue"
+                                   FontSize="14"
+                                   FontWeight="Bold"/>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Image Source="Images/Lupa.png"
+                           Width="30"
+                           Height="30"/>
+                    <TextBlock Text="Caută ⯈"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               Foreground="Black"/>
+                </StackPanel>
+            </Button>
+            <TextBox x:Name="txtCautare"
+         Width="200"
+         Height="32"
+         VerticalAlignment="Center"
+         FontSize="16"
+         FontWeight="SemiBold"
+         Foreground="DarkBlue"
+         Padding="6,2,6,2"
+         Background="White"
+         BorderBrush="SteelBlue"
+         BorderThickness="2"
+         CaretBrush="DarkRed"
+         Margin="4">
+
+
+                <TextBox.ToolTip>
+                    <ToolTip Background="LightYellow" Padding="6">
+                        <TextBlock Text="Scrie un cuvânt pe care vrei să îl cauți în BIBLIE"
+                       Foreground="DarkBlue"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"/>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+
+
+        </StackPanel>
+    </Grid>
+</Window>

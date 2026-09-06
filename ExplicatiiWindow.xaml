@@ -1,0 +1,174 @@
+﻿<Window x:Class="Biblia.ExplicatiiWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Explicații pe verset"
+        Height="864"
+        Width="1000"
+        Background="#FFFDFDFD"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <StackPanel>
+
+            <!-- Titlu -->
+            <Border Background="LightBlue" CornerRadius="6" Padding="10" Margin="0,0,0,20" Height="52">
+                <TextBlock Text="Explicații Biblice"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Foreground="#333"
+                           HorizontalAlignment="Center"/>
+            </Border>
+
+            <!-- Alegere verset -->
+            <GroupBox Header="Selectează versetul" Margin="0,0,0,10" Background="MintCream">
+                <Grid Margin="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="225.9"/>
+                        <ColumnDefinition Width="Auto" MinWidth="56.1"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="Auto" MinWidth="56.1"/>
+                        <ColumnDefinition Width="62"/>
+                        <ColumnDefinition Width="83*"/>
+                        <ColumnDefinition Width="361*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Carte -->
+                    <TextBlock Text="Carte:" Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Margin="0,0,6,0"
+                   FontSize="12" Height="16"/>
+                    <ComboBox x:Name="comboCarte"
+                  Grid.Column="1"
+                  FontSize="12"
+                  VerticalContentAlignment="Center"
+                  SelectionChanged="comboCarte_SelectionChanged" Margin="5,0,5,0"/>
+
+                    <!-- Capitol -->
+                    <TextBlock Text="Capitol:" Grid.Column="2"
+                   VerticalAlignment="Center"
+                   Margin="10,0,6,0"
+                   FontSize="12" Height="16"/>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="0,0,5,0">
+                        <ComboBox x:Name="comboCapitol"
+                      Width="42"
+                      FontSize="12"
+                      VerticalContentAlignment="Center"
+                      Margin="0,0,3,0"
+                      SelectionChanged="comboCapitol_SelectionChanged"/>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <Button Content="▲" Width="13" Height="13" FontSize="9" Padding="0" Click="CapitolUp_Click"/>
+                            <Button Content="▼" Width="13" Height="13" FontSize="9" Padding="0" Click="CapitolDown_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Verset -->
+                    <TextBlock Text="Verset:" Grid.Column="4"
+                   VerticalAlignment="Center"
+                   Margin="10,0,6,0"
+                   FontSize="12" Height="16"/>
+                    <StackPanel Grid.Column="5" Orientation="Horizontal" Margin="0,0,4,0">
+                        <ComboBox x:Name="comboVerset"
+                      Width="42"
+                      FontSize="12"
+                      VerticalContentAlignment="Center"
+                      Margin="0,0,3,0"/>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <Button Content="▲" Width="13" Height="13" FontSize="9" Padding="0" Click="VersetUp_Click"/>
+                            <Button Content="▼" Width="13" Height="13" FontSize="9" Padding="0" Click="VersetDown_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+
+            <!-- Alegere explicator + buton în linie -->
+            <GroupBox Header="Selectează explicatorul" Margin="0,0,0,20" Background="MintCream">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <TextBlock Text="Explicator:" Width="80" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="comboExplicator" Width="200" Margin="0,0,20,0"/>
+                    <Button Content="Afișează explicația"
+                            Height="25"
+                            Width="180"
+                            Click="AfiseazaExplicatiaPeVerset"
+                            Background="#007ACC"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Cursor="Hand"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Etichetă cu referința versetului -->
+            <Label x:Name="labelReferinta"
+                   Content=""
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="#444"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,-30"
+                   FontStyle="Italic"/>
+
+            <!-- Versetul explicat -->
+            <Border BorderBrush="DarkGoldenrod"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Background="#FFFDF5"
+                    Padding="10"
+                    Margin="0,0,0,12">
+                <Border.Effect>
+                    <DropShadowEffect Color="OrangeRed"
+                                      BlurRadius="12"
+                                      ShadowDepth="2"
+                                      Opacity="0.4"/>
+                </Border.Effect>
+
+                <StackPanel>
+                    <TextBlock Text="Versetul la care se face explicația"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Foreground="DarkBlue"
+                               Margin="0,0,0,6"
+                               TextAlignment="Center"/>
+                    <TextBlock x:Name="textVersetExplicat"
+                               TextWrapping="Wrap"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               TextAlignment="Justify"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Rezultat cu scroll -->
+            <Border BorderBrush="#CCC"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Padding="0"
+                    Margin="0,5,0,0"
+                    Background="MintCream">
+                <StackPanel>
+                    <Border BorderBrush="Black" BorderThickness="0,0,0,1" Margin="0,0,0,10">
+                        <TextBlock Text="Explicația versetului"
+                                   FontWeight="Bold"
+                                   FontSize="14"
+                                   Background="WhiteSmoke"
+                                   TextAlignment="Center"/>
+                    </Border>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Height="450">
+                        <TextBlock x:Name="textExplicatieVerset"
+                                   TextWrapping="Wrap"
+                                   FontSize="15"
+                                   Foreground="Black"
+                                   TextAlignment="Justify"
+                                   MaxWidth="800"
+                                   Padding="0,0,0,40"
+                                   Height="400"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </Grid>
+</Window>

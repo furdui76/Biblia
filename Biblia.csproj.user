@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="BibliaWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="EmailWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ExplicatiiWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraComentariu.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraEditareComentariu.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraFavorite.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraFavoriteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraIstoric.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraTrimiteri.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FereastraVerset.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="TemeWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="TrimiteriWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="VersetWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

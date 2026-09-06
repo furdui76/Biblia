@@ -1,0 +1,33 @@
+﻿<Window x:Class="Biblia.VersetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Verset" Height="400" Width="600">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <!-- Verset cu scroll -->
+            <RowDefinition Height="Auto"/>
+            <!-- Explicație -->
+        </Grid.RowDefinitions>
+
+        <!-- 🔹 Textul versetului cu scroll -->
+        <Border Grid.Row="0"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1"
+                CornerRadius="6"
+                Background="White"
+                Padding="10"
+                Margin="0,0,0,10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="tbVerset"
+                           FontSize="16"
+                           TextWrapping="Wrap"
+                           Foreground="Black"/>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 🔹 Explicația într-un Border cu stilizare demnă -->
+    </Grid>
+</Window>
+
+

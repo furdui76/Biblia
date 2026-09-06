@@ -1,0 +1,72 @@
+﻿<Window x:Class="Biblia.FereastraComentariu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Comentariu la verset" Height="600" Width="850"
+        WindowStartupLocation="CenterScreen"
+        Background="#FAFAF8">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 🔹 rând nou pentru comentator -->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ComboBox cu lista autorilor -->
+        <ComboBox x:Name="comboAutori"
+                  Grid.Row="0"
+                  Margin="0,0,0,15"
+                  FontSize="14"
+                  FontFamily="Segoe UI"
+                  ToolTip="Selectează autorul comentariului"
+                  SelectionChanged="comboAutori_SelectionChanged"/>
+
+        <!-- TextBlock pentru afișarea comentatorului ales -->
+        <TextBlock x:Name="lblComentator"
+                   Grid.Row="1"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="DarkRed"
+                   Margin="0,0,0,15"
+                   Text="Comentator: [nume]"/>
+
+        <!-- ScrollViewer cu RichTextBox pentru comentariu -->
+        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto"
+                      Background="White"
+                      BorderBrush="#CCC"
+                      BorderThickness="1"
+                      Padding="10"
+                      Margin="0,0,0,10">
+            <RichTextBox x:Name="richComentariu"
+                         IsReadOnly="True"
+                         FontSize="17"
+                         FontFamily="Georgia"
+                         Foreground="#222"
+                         Background="White"
+                         BorderThickness="0"
+                         Padding="10"
+                         VerticalScrollBarVisibility="Auto"
+                         Margin="0"/>
+        </ScrollViewer>
+
+        <!-- Butoane de acțiune -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+            <Button Content="📋 Copiază"
+                    Click="BtnCopiaza_Click"
+                    FontSize="14"
+                    Padding="8,4"
+                    Margin="5"/>
+            <Button Content="❌ Închide"
+                    Click="BtnInchide_Click"
+                    FontSize="14"
+                    Padding="8,4"
+                    Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

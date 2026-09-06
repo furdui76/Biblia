@@ -1,0 +1,77 @@
+﻿<Window x:Class="Biblia.FereastraFavoriteView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Favorite"
+        Width="600"
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
+        Background="White">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Selectarea listei -->
+        <ComboBox x:Name="comboListe"
+                  Grid.Row="0"
+                  Margin="0,0,0,10"
+                  FontSize="14"
+                  SelectionChanged="comboListe_SelectionChanged"/>
+
+        <!-- Butoane pentru LISTE (SUS) -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,0,10">
+
+            <Button Content="🗑️ Șterge listă"
+                    Width="120"
+                    Margin="0,0,10,0"
+                    Click="BtnStergeLista_Click"/>
+
+            <Button Content="✏️ Redenumește listă"
+                    Width="150"
+                    Margin="0,0,10,0"
+                    Click="BtnEditLista_Click"/>
+
+          
+        </StackPanel>
+
+        <!-- Listă de versete favorite -->
+        <ListBox x:Name="listBoxFavorite"
+                 Grid.Row="2"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 HorizontalContentAlignment="Stretch"/>
+
+        <!-- Butoane pentru VERSETE (JOS) -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+
+            <Button Content="🗑️ Șterge verset"
+                    Width="120"
+                    Margin="0,0,10,0"
+                    Click="BtnSterge_Click"/>
+
+            <Button Content="✏️ Editează comentariu"
+                    Width="150"
+                    Margin="0,0,10,0"
+                    Click="BtnEdit_Click"/>
+
+            <Button Content="➕ Adaugă la schiță"
+                    Width="120"
+                    Margin="0,0,10,0"
+                    Click="BtnTrimiteLaSchita_Click"/>
+
+          
+        </StackPanel>
+
+    </Grid>
+</Window>
